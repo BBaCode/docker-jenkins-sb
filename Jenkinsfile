@@ -11,12 +11,6 @@ pipeline {
     }
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'maven:3.8.1-openjdk-17'
-                    args '-v /root/.m2:/root/.m2'
-                }
-            }
             steps {
                 script {
                     // Checkout the code from the repository
@@ -31,12 +25,6 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            agent {
-                docker {
-                    image 'docker:20.10.7'  // Ensure the Docker image version matches your setup
-                    args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
                     // Build Docker image
@@ -45,12 +33,6 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            agent {
-                docker {
-                    image 'docker:20.10.7'  // Ensure the Docker image version matches your setup
-                    args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
                     // Login to Docker Hub
